@@ -353,4 +353,32 @@ class S3 implements StorageInterface, LoggerAwareInterface
     {
         $this->logger = $logger;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkIfFileExists($file, $project)
+    {
+        $bucket = $this->getBucket();
+        $key = $this->getFileKey($project, $file);
+
+        try {
+            return $this->getClient()->doesObjectExist($bucket, $key);
+        } catch (\Exception $e) {
+            throw new ServiceException($e->getMessage());
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkIfProjectExists($project)
+    {
+        $bucket = $this->getBucket();
+        try {
+            return $this->getClient()->doesObjectExist($bucket, $project);
+        } catch (\Exception $e) {
+            throw new ServiceException($e->getMessage());
+        }
+    }
 }

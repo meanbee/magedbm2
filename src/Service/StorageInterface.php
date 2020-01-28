@@ -81,4 +81,22 @@ interface StorageInterface extends ConfigurableServiceInterface
      * @return void
      */
     public function clean($project, $keep = 5);
+
+    /**
+     * Check if the given file exists for the project to allow us to gracefully handle files that don't
+     *
+     * @param string $file The file to check the project for
+     * @param string $project The project to check
+     *
+     * @return bool
+     */
+    public function checkIfFileExists($file, $project);
+
+    /**
+     * Check if the given project exists to allow us to gracefully handle projects that don't
+     *
+     * @param $project
+     * @return bool
+     */
+    public function checkIfProjectExists($project);
 }
